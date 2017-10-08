@@ -1,4 +1,4 @@
-# gza - Declarative custom HTML elements
+# GZA - Declarative custom HTML elements
 
 ```javascript
 const gza = require('gza')
