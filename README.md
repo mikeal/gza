@@ -37,19 +37,19 @@ Here's an example of every feature currently implemented.
 const gza = require('gza')
 
 gza`
-${element => {
+${element => { /* initialization function */
   element.i += 1
 }}
-${async element => {
+${async element => { /* supports async functions */
   element.i += 1
 }}
-<test-kitchen ${{test: 'proptest', i: 0, size: 100}}>
-  <div id="constructors">${settings => settings.i}</div>
-  <div id="propdefault">${async settings => settings.test}</div>
+<test-kitchen ${{test: 'test', i: 0, size: 100}}> <!-- Default settings -->
+  <div id="constructors">${settings => settings.i}</div> <!-- Templating -->
+  <div id="propdefault">${async settings => settings.test}</div> <!-- Supports async -->
 </test-kitchen>
 <style>
 ::slotted(render) {
-  font-size: ${settings => settings.size + '%'};
+  font-size: ${settings => settings.size + '%'}; <!-- ShadowDOM Templating -->
 }
 </style>
 <h3>Test</h3>
@@ -66,7 +66,7 @@ ${async element => {
   <h3>Test</h3>
   <render>
     <div id="constructors">2</div>
-    <div id="propdefault">proptest</div>
+    <div id="propdefault">test</div>
   </render>
 </kitchen-sink>
 
