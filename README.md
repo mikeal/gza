@@ -56,6 +56,7 @@ ${async element => {
 <my-image ${ {src: null} } >
   <img src="${settings => settings.src}"></img>
 </my-image>
+`
 ```
 
 ## Templatized Rendering
