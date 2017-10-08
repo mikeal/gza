@@ -1,0 +1,35 @@
+{
+  "name": "gza",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "rza": "^1.1.2"
+  },
+  "scripts": {
+    "commit": "git-cz",
+    "test": "tap tests/test-*.js",
+    "posttest": "standard",
+    "precommit": "npm test",
+    "prepush": "npm test",
+    "commitmsg": "validate-commit-msg",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "budo": "^10.0.4",
+    "husky": "^0.14.3",
+    "semantic-release": "^8.0.3",
+    "cz-conventional-changelog": "^2.0.0",
+    "validate-commit-msg": "^2.14.0",
+    "tap": "^10.7.2",
+    "standard": "^10.0.3"
+  }
+}
