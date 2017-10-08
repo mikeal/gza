@@ -1,6 +1,6 @@
 {
   "name": "gza",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "description": "",
   "main": "index.js",
   "keywords": [],
@@ -31,5 +31,9 @@
     "validate-commit-msg": "^2.14.0",
     "tap": "^10.7.2",
     "standard": "^10.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikeal/gza.git"
   }
 }

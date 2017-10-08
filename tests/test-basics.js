@@ -1,5 +1,5 @@
 const { test } = require('tap')
-const parse = require('./lib/parser')
+const parse = require('../lib/parser')
 
 const gza = (strings, ...keys) => parse(strings, keys)
 
