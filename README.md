@@ -56,6 +56,7 @@ ${async element => {
 <my-image ${ {src: null} } >
   <img src="${settings => settings.src}"></img>
 </my-image>
+`
 ```
 
 ## Templatized Rendering
@@ -124,9 +125,9 @@ content and styling when properties and values change.
 const nowhitespace = str => str.replace(/ /g, '')
 
 rza`
-<my-shadow>
+<my-element>
   ${(settings, innerHTML) => nowhitespace(innerHTML)}
-</my-shadow>
+</my-element>
 <style>
 h3 {
   font-size: 200%;
@@ -139,12 +140,12 @@ h3 {
 
 ```html
 <!-- Example w/ defaults -->
-<my-shadow>This is a test.</my-shadow>
+<my-element>This is a test.</my-element>
 <!-- Renders -->
-<my-shadow>
+<my-element>
   <h3>Thisisatest.</h3> <!-- This will display at 200% font size. -->
   <render>Thisisatest.</render>
-</my-shadow>
+</my-element>
 
 ```
 
