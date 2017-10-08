@@ -31,7 +31,8 @@ const gza = (strings, ...keys) => {
       }
       let _render = await render(parsed.template, settings, innerHTML)
       if (parsed.shadow.filter(s => typeof s === 'function').length) {
-        this.shadow = await render(parsed.shadow, settings, innerHTML)
+        let _shadow = await render(parsed.shadow, settings, innerHTML)
+        this.shadowRoot.innerHTML = _shadow
       }
       return _render
     }

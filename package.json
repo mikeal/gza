@@ -1,7 +1,7 @@
 {
   "name": "gza",
   "version": "0.0.0-development",
-  "description": "",
+  "description": "Declarative custom HTML elements",
   "main": "index.js",
   "keywords": [],
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
