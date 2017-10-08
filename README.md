@@ -34,55 +34,6 @@ gza`
 See also [markdown-element](https://github.com/mikeal/markdown-element)
 which is implemented with `rza`
 
-### Kitchen Sink
-
-Here's an example of every feature currently implemented.
-
-```javascript
-const gza = require('gza')
-
-gza`
-${element => { /* initialization function */
-  element.i += 1
-}}
-${async element => { /* supports async functions */
-  element.i += 1
-}}
-<test-kitchen ${{test: 'test', i: 0, size: 100}}> <!-- Default settings -->
-  <div id="constructors">${settings => settings.i}</div> <!-- Templating -->
-  <div id="propdefault">${async settings => settings.test}</div> <!-- Supports async -->
-  <div id="inner">${(settings, innerHTML) => innerHTML}</div>
-</test-kitchen>
-<style>
-::slotted(render) {
-  font-size: ${settings => settings.size + '%'}; <!-- ShadowDOM Templating -->
-}
-</style>
-<h3>Test</h3>
-<slot name="render"></slot>
-`
-```
-
-```html
-<!-- Example w/ defaults -->
-<kitchen-sink>TestContent</kitchen-sink>
-
-<!-- Renders -->
-<kitchen-sink>
-  <h3>Test</h3>
-  <render>
-    <div id="constructors">2</div>
-    <div id="propdefault">test</div>
-    <div id="inner">TestContent</div>
-  </render>
-</kitchen-sink>
-
-<!-- Example w/ property -->
-<kitchen-sink size=200>TestContent</my-element>
-
-<!-- Renders the same as before but with font-size increased to 200%-->
-```
-
 # Features
 
 ## Initialization Functions
@@ -197,8 +148,57 @@ h3 {
 
 ```
 
+## Kitchen Sink
+
+Here's an example of every feature currently implemented.
+
+```javascript
+const gza = require('gza')
+
+gza`
+${element => { /* initialization function */
+  element.i += 1
+}}
+${async element => { /* supports async functions */
+  element.i += 1
+}}
+<test-kitchen ${{test: 'test', i: 0, size: 100}}> <!-- Default settings -->
+  <div id="constructors">${settings => settings.i}</div> <!-- Templating -->
+  <div id="propdefault">${async settings => settings.test}</div> <!-- Supports async -->
+  <div id="inner">${(settings, innerHTML) => innerHTML}</div>
+</test-kitchen>
+<style>
+::slotted(render) {
+  font-size: ${settings => settings.size + '%'}; <!-- ShadowDOM Templating -->
+}
+</style>
+<h3>Test</h3>
+<slot name="render"></slot>
+`
+```
+
+```html
+<!-- Example w/ defaults -->
+<kitchen-sink>TestContent</kitchen-sink>
+
+<!-- Renders -->
+<kitchen-sink>
+  <h3>Test</h3>
+  <render>
+    <div id="constructors">2</div>
+    <div id="propdefault">test</div>
+    <div id="inner">TestContent</div>
+  </render>
+</kitchen-sink>
+
+<!-- Example w/ property -->
+<kitchen-sink size=200>TestContent</my-element>
+
+<!-- Renders the same as before but with font-size increased to 200%-->
+```
+
 # Why is it called GZA?
 
 Cause GZA the **genius!**
 
-![Liquid Swords](https://file-vqxdxybyne.now.sh)
+<img src="https://file-vqxdxybyne.now.sh" width="400">
