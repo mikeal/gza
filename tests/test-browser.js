@@ -5,9 +5,11 @@ const { test } = require('tap')
 const path = require('path')
 const bl = require('bl')
 const browserify = require('browserify')
+const istanbul = require('browserify-istanbul')
 
 const bundle = new Promise((resolve, reject) => {
   var b = browserify()
+  b.transform(istanbul)
   b.add(path.join(__dirname, 'components.js'))
   b.bundle().pipe(bl((err, buff) => {
     if (err) return reject(err)

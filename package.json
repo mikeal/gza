@@ -26,6 +26,7 @@
   "devDependencies": {
     "bl": "^1.2.1",
     "browserify": "^14.4.0",
+    "browserify-istanbul": "git+https://github.com/mikeal/browserify-istanbul.git#es2016",
     "budo": "^10.0.4",
     "cz-conventional-changelog": "^2.0.0",
     "husky": "^0.14.3",
