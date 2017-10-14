@@ -24,13 +24,16 @@
     }
   },
   "devDependencies": {
+    "bl": "^1.2.1",
+    "browserify": "^14.4.0",
     "budo": "^10.0.4",
-    "husky": "^0.14.3",
-    "semantic-release": "^8.0.3",
     "cz-conventional-changelog": "^2.0.0",
-    "validate-commit-msg": "^2.14.0",
+    "husky": "^0.14.3",
+    "puppeteer": "^0.11.0",
+    "semantic-release": "^8.0.3",
+    "standard": "^10.0.3",
     "tap": "^10.7.2",
-    "standard": "^10.0.3"
+    "validate-commit-msg": "^2.14.0"
   },
   "repository": {
     "type": "git",
