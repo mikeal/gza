@@ -93,3 +93,8 @@ const gza = (strings, ...keys) => {
 }
 
 module.exports = gza
+
+/* Expose global in standalone bundle. */
+if (process.distjs) {
+  window.gza = gza
+}

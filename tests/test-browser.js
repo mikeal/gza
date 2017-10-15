@@ -39,8 +39,8 @@ test('setup', async t => {
 
 const getPage = async (t, inner) => {
   const page = await browser.newPage()
-  await page.setContent(await index(inner))
   page.on('console', msg => console.log(msg.text))
+  await page.setContent(await index(inner))
   page.browser = browser
   let same = (x, y) => t.same(x, y)
   await page.exposeFunction('same', (x, y) => {

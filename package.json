@@ -16,7 +16,8 @@
     "precommit": "npm test",
     "prepush": "npm test",
     "commitmsg": "validate-commit-msg",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "prepublishOnly": "distjs"
   },
   "config": {
     "commitizen": {
@@ -28,6 +29,7 @@
     "browserify": "^14.4.0",
     "budo": "^10.0.4",
     "cz-conventional-changelog": "^2.0.0",
+    "distjs": "^1.1.0",
     "husky": "^0.14.3",
     "puppeteer": "^0.12.0",
     "semantic-release": "^8.0.3",
@@ -38,5 +40,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mikeal/gza.git"
+  },
+  "standard": {
+    "ignore": [
+      "dist"
+    ]
   }
 }
