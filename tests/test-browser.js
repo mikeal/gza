@@ -40,6 +40,7 @@ test('setup', async t => {
 const getPage = async (t, inner) => {
   const page = await browser.newPage()
   await page.setContent(await index(inner))
+  page.on('console', msg => console.log(msg.text))
   page.browser = browser
   let same = (x, y) => t.same(x, y)
   await page.exposeFunction('same', (x, y) => {
@@ -118,6 +119,28 @@ test('shadowDOM templating', async t => {
     let expected = `<style>test{font-size:5px;}</style>`
     same(clean(document.querySelector('test-seven').shadowRoot.innerHTML), expected)
   })
+  await page.close()
+})
+
+test('promises init/template/shadow', async t => {
+  t.plan(4)
+  let page = await getPage(t, `<test-eight></test-eight>`)
+  await page.waitFor('test-eight render')
+  await page.evaluate(async () => {
+    let expected = `<style>test{font-size:3px;}</style>`
+    same(clean(document.querySelector('test-eight').shadowRoot.innerHTML), expected)
+    expected = '3'
+    same(clean(document.querySelector('test-eight render').innerHTML), expected)
+    document.querySelector('test-eight').test += 1
+    setTimeout(() => {
+      expected = `<style>test{font-size:4px;}</style>`
+      same(clean(document.querySelector('test-eight').shadowRoot.innerHTML), expected)
+      expected = '4'
+      same(clean(document.querySelector('test-eight render').innerHTML), expected)
+      document.body.innerHTML += '<test-finished></test-finished>'
+    }, 100)
+  })
+  await page.waitFor('test-finished')
   await page.close()
 })
 

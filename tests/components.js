@@ -55,4 +55,18 @@ gza`
 </style>
 `
 
+gza`
+${async element => {
+  element.test += 1
+}}
+<test-eight ${{test: 2}}>
+  ${async settings => settings.test}
+</test-eight>
+<style>
+  test {
+    font-size: ${async settings => settings.test}px;
+  }
+</style>
+`
+
 window.clean = str => str.replace(/\n/g, '').replace(/ /g, '')

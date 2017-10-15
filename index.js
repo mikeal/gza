@@ -27,6 +27,9 @@ const gza = (strings, ...keys) => {
            Instead, we can just reset the re-render and settings state.
          */
         this._rerender = false
+        /* Since we are suppressing re-render we need to re-pull settings
+           because they can be altered by the init function.
+        */
         settings = Object.assign({}, this._settings)
       }
       let _render = await render(parsed.template, settings, innerHTML)
