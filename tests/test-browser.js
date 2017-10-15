@@ -138,7 +138,7 @@ test('promises init/template/shadow', async t => {
       expected = '4'
       same(clean(document.querySelector('test-eight render').innerHTML), expected)
       document.body.innerHTML += '<test-finished></test-finished>'
-    }, 100)
+    }, 10)
   })
   await page.waitFor('test-finished')
   await page.close()
@@ -160,7 +160,7 @@ test('element in template', async t => {
       expected = '<div>pass</div><test-container>default</test-container>'
       same(clean(document.querySelector('test-nine render').innerHTML), expected)
       document.body.innerHTML += '<test-finished></test-finished>'
-    }, 300)
+    }, 10)
   })
   await page.waitFor('test-finished')
 })
@@ -174,13 +174,36 @@ test('waitFor subelement', async t => {
       let expected = '<renderslot="render"></render>'
       same(clean(document.querySelector('test-ten').innerHTML), expected)
       document.querySelector('test-ten').sub = document.createElement('test-finished')
-    }, 100)
+    }, 10)
   })
   await page.waitFor('test-finished')
   await page.evaluate(async () => {
     let expected = '<renderslot="render"><test-finished></test-finished><t-1></t-1></render>'
     same(clean(document.querySelector('test-ten').innerHTML), expected)
   })
+  await page.close()
+})
+
+test('dyanmically addSetting in init', async t => {
+  t.plan(3)
+  let page = await getPage(t, `<test-eleven></test-eleven>`)
+  await page.waitFor('test-eleven render')
+  await page.evaluate(async () => {
+    let expected = '<button></button>'
+    same(clean(document.querySelector('test-eleven render').innerHTML), expected)
+    document.querySelector('test-eleven render button').click()
+    expected = '<button>0</button>'
+    document.querySelector('test-eleven').i += 1
+    setTimeout(() => {
+      expected = '<button>0</button>'
+      same(clean(document.querySelector('test-eleven render').innerHTML), expected)
+      document.querySelector('test-eleven render button').click()
+      expected = '<button>1</button>'
+      same(clean(document.querySelector('test-eleven render').innerHTML), expected)
+      document.body.innerHTML += '<test-finished></test-finished>'
+    }, 10)
+  })
+  await page.waitFor('test-finished')
   await page.close()
 })
 

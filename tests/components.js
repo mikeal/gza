@@ -83,4 +83,17 @@ ${settings => settings.waitFor('sub')}
 </test-ten>
 `
 
+gza`
+${element => {
+  let btn = document.createElement('button')
+  btn.onclick = () => {
+    btn.textContent = element.i
+  }
+  element.addSetting('button', btn)
+}}
+<test-eleven ${{i: 0}}>
+${settings => settings.button}
+</test-eleven>
+`
+
 window.clean = str => str.replace(/\n/g, '').replace(/ /g, '')
