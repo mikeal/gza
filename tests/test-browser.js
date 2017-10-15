@@ -144,6 +144,46 @@ test('promises init/template/shadow', async t => {
   await page.close()
 })
 
+test('element in template', async t => {
+  t.plan(3)
+  let page = await getPage(t, `<test-nine></test-nine>`)
+  await page.waitFor('test-nine render')
+  await page.evaluate(async () => {
+    let expected = '<div></div><test-container>default</test-container>'
+    same(clean(document.querySelector('test-nine render').innerHTML), expected)
+    document.querySelector('test-nine').sub.textContent = 'pass'
+    document.querySelector('test-container').innerHTML = 'pass'
+    expected = '<div>pass</div><test-container>pass</test-container>'
+    same(clean(document.querySelector('test-nine render').innerHTML), expected)
+    document.querySelector('test-nine').i += 1
+    setTimeout(() => {
+      expected = '<div>pass</div><test-container>default</test-container>'
+      same(clean(document.querySelector('test-nine render').innerHTML), expected)
+      document.body.innerHTML += '<test-finished></test-finished>'
+    }, 300)
+  })
+  await page.waitFor('test-finished')
+})
+
+test('waitFor subelement', async t => {
+  t.plan(2)
+  let page = await getPage(t, `<test-ten></test-ten>`)
+  await page.waitFor('test-ten render')
+  await page.evaluate(async () => {
+    setTimeout(() => {
+      let expected = '<renderslot="render"></render>'
+      same(clean(document.querySelector('test-ten').innerHTML), expected)
+      document.querySelector('test-ten').sub = document.createElement('test-finished')
+    }, 100)
+  })
+  await page.waitFor('test-finished')
+  await page.evaluate(async () => {
+    let expected = '<renderslot="render"><test-finished></test-finished><t-1></t-1></render>'
+    same(clean(document.querySelector('test-ten').innerHTML), expected)
+  })
+  await page.close()
+})
+
 test('teardown', async t => {
   await browser.close()
   t.end()

@@ -1,14 +1,40 @@
+/* globals HTMLElement */
 const RZA = require('rza')
 const parse = require('./lib/parser')
 
-const render = async (arr, settings, innerHTML) => {
+const random = () => Math.random().toString(36).substring(7)
+
+const render = async (el, arr, settings, innerHTML) => {
   let tmp = arr.map(t => {
     if (typeof t === 'string') return t
     else if (typeof t === 'function') return t(settings, innerHTML)
+    else if (t instanceof HTMLElement) return t
     else throw new Error(`Unknown type in template: ${t}`)
   })
-  let result = await Promise.all(tmp)
-  return result.filter(f => f).join('')
+  let results = await Promise.all(tmp)
+  let replacements = {}
+
+  let html = results.map(r => {
+    if (typeof r === 'string') return r
+    if (typeof r === 'undefined') return ''
+    if (typeof r === 'number') return r.toString()
+    if (typeof r === 'boolean') return r.toString()
+    if (r === null) return ''
+    if (r instanceof HTMLElement) {
+      let id = random()
+      replacements[id] = r
+      return `<span rza="${id}"></span>`
+    }
+    throw new Error(`Unknown type in template return: ${typeof r}.`)
+  })
+
+  el.innerHTML = html.join('')
+  for (let id in replacements) {
+    let span = el.querySelector(`span[rza="${id}"`)
+    let rep = replacements[id]
+    if (rep.parentNode) rep.parentNode.removeChild(rep)
+    span.parentNode.replaceChild(rep, span)
+  }
 }
 
 const nowhitespace = str => {
@@ -32,10 +58,10 @@ const gza = (strings, ...keys) => {
         */
         settings = Object.assign({}, this._settings)
       }
-      let _render = await render(parsed.template, settings, innerHTML)
+      let _render = this.renderElement
+      await render(_render, parsed.template, settings, innerHTML)
       if (parsed.shadow.filter(s => typeof s === 'function').length) {
-        let _shadow = await render(parsed.shadow, settings, innerHTML)
-        this.shadowRoot.innerHTML = _shadow
+        await render(this.shadowRoot, parsed.shadow, settings, innerHTML)
       }
       return _render
     }

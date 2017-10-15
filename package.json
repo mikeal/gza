@@ -7,7 +7,7 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "rza": "^2.1.0"
+    "rza": "^2.2.0"
   },
   "scripts": {
     "commit": "git-cz",

@@ -69,4 +69,18 @@ ${async element => {
 </style>
 `
 
+gza`
+<test-nine ${{sub: () => document.createElement('div'), i: 0}}>
+ ${settings => settings.sub}
+ <test-container>default</test-container>
+</test-nine>
+`
+
+gza`
+<test-ten>
+${settings => settings.waitFor('sub')}
+<t-1></t-1>
+</test-ten>
+`
+
 window.clean = str => str.replace(/\n/g, '').replace(/ /g, '')
