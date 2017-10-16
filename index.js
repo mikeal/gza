@@ -1,14 +1,17 @@
+/* globals HTMLElement */
 const RZA = require('rza')
+const raekwon = require('raekwon')
 const parse = require('./lib/parser')
 
-const render = async (arr, settings, innerHTML) => {
+const render = async (el, arr, settings, innerHTML) => {
   let tmp = arr.map(t => {
     if (typeof t === 'string') return t
     else if (typeof t === 'function') return t(settings, innerHTML)
+    else if (t instanceof HTMLElement) return t
     else throw new Error(`Unknown type in template: ${t}`)
   })
-  let result = await Promise.all(tmp)
-  return result.filter(f => f).join('')
+  let results = await Promise.all(tmp)
+  raekwon(el, results)
 }
 
 const nowhitespace = str => {
@@ -27,12 +30,15 @@ const gza = (strings, ...keys) => {
            Instead, we can just reset the re-render and settings state.
          */
         this._rerender = false
+        /* Since we are suppressing re-render we need to re-pull settings
+           because they can be altered by the init function.
+        */
         settings = Object.assign({}, this._settings)
       }
-      let _render = await render(parsed.template, settings, innerHTML)
+      let _render = this.renderElement
+      await render(_render, parsed.template, settings, innerHTML)
       if (parsed.shadow.filter(s => typeof s === 'function').length) {
-        let _shadow = await render(parsed.shadow, settings, innerHTML)
-        this.shadowRoot.innerHTML = _shadow
+        await render(this.shadowRoot, parsed.shadow, settings, innerHTML)
       }
       return _render
     }
@@ -64,3 +70,8 @@ const gza = (strings, ...keys) => {
 }
 
 module.exports = gza
+
+/* Expose global in standalone bundle. */
+if (process.distjs) {
+  window.gza = gza
+}

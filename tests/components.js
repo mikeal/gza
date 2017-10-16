@@ -55,4 +55,56 @@ gza`
 </style>
 `
 
+gza`
+${async element => {
+  element.test += 1
+}}
+<test-eight ${{test: 2}}>
+  ${async settings => settings.test}
+</test-eight>
+<style>
+  test {
+    font-size: ${async settings => settings.test}px;
+  }
+</style>
+`
+
+gza`
+<test-nine ${{sub: () => document.createElement('div'), i: 0}}>
+ ${settings => settings.sub}
+ <test-container>default</test-container>
+</test-nine>
+`
+
+gza`
+<test-ten>
+${settings => settings.waitFor('sub')}
+<t-1></t-1>
+</test-ten>
+`
+
+gza`
+${element => {
+  let btn = document.createElement('button')
+  btn.onclick = () => {
+    btn.textContent = element.i
+  }
+  element.addSetting('button', btn)
+}}
+<test-eleven ${{i: 0}}>
+${settings => settings.button}
+</test-eleven>
+`
+
+gza`
+${element => {
+  element.addSetting('arr', ['<pre></pre>'])
+}}
+<test-twelve>
+  <top>
+  ${settings => settings.arr}
+  </top>
+</test-twelve>
+`
+
 window.clean = str => str.replace(/\n/g, '').replace(/ /g, '')
