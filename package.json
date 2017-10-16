@@ -7,6 +7,7 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
   "license": "Apache-2.0",
   "dependencies": {
+    "browserify-istanbul": "^3.0.1",
     "raekwon": "^1.1.0",
     "rza": "^2.4.1"
   },
@@ -28,11 +29,11 @@
   "devDependencies": {
     "bl": "^1.2.1",
     "browserify": "^14.4.0",
-    "browserify-istanbul": "git+https://github.com/mikeal/browserify-istanbul.git#es2016",
     "budo": "^10.0.4",
     "cz-conventional-changelog": "^2.0.0",
     "distjs": "^1.1.0",
     "husky": "^0.14.3",
+    "mkdirp": "^0.5.1",
     "puppeteer": "^0.12.0",
     "semantic-release": "^8.0.3",
     "standard": "^10.0.3",

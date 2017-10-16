@@ -1,4 +1,4 @@
-/* globals clean, same */
+/* globals clean, same, __coverage__ */
 const puppeteer = require('puppeteer')
 const { test } = require('tap')
 
@@ -6,6 +6,33 @@ const path = require('path')
 const bl = require('bl')
 const browserify = require('browserify')
 const istanbul = require('browserify-istanbul')
+
+const fs = require('fs')
+const mkdirp = require('mkdirp')
+const COVERAGE_FOLDER = './.nyc_output'
+
+function outputCoverage (page) {
+  return new Promise(async (resolve, reject) => {
+    mkdirp.sync(COVERAGE_FOLDER)
+    const dumpCoverage = (payload) => {
+      const cov = JSON.parse(payload)
+      fs.writeFileSync(
+        path.resolve(COVERAGE_FOLDER, `${Date.now()}.json`),
+        JSON.stringify(cov, null, 2),
+        'utf8'
+      )
+      return resolve()
+    }
+
+    await page.exposeFunction('dumpCoverage', (payload) => {
+      dumpCoverage(payload)
+    })
+
+    await page.evaluate(async () => {
+      dumpCoverage(JSON.stringify(__coverage__))
+    })
+  })
+}
 
 const bundle = new Promise((resolve, reject) => {
   var b = browserify()
@@ -50,6 +77,11 @@ const getPage = async (t, inner) => {
   await page.exposeFunction('same', (x, y) => {
     same(x, y)
   })
+  page._close = page.close
+  page.close = async () => {
+    await outputCoverage(page)
+    return page._close()
+  }
   return page
 }
 
