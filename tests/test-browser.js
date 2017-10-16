@@ -40,6 +40,8 @@ test('setup', async t => {
 const getPage = async (t, inner) => {
   const page = await browser.newPage()
   page.on('console', msg => console.log(msg.text))
+  page.on('error', err => { throw err })
+  page.on('pageerror', msg => { throw new Error(`Page Error: ${msg}`) })
   await page.setContent(await index(inner))
   page.browser = browser
   let same = (x, y) => t.same(x, y)
