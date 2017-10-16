@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "raekwon": "^1.0.1",
-    "rza": "^2.3.0"
+    "rza": "^2.4.1"
   },
   "scripts": {
     "commit": "git-cz",

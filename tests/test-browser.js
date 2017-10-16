@@ -209,6 +209,24 @@ test('dyanmically addSetting in init', async t => {
   await page.close()
 })
 
+test('dynamic arrays from settings', async t => {
+  t.plan(2)
+  let page = await getPage(t, `<test-twelve></test-twelve>`)
+  await page.waitFor('test-twelve render')
+  await page.evaluate(async () => {
+    let expected = '<top><pre></pre></top>'
+    same(clean(document.querySelector('test-twelve render').innerHTML), expected)
+    document.querySelector('test-twelve').arr.push('<next></next>')
+    setTimeout(() => {
+      expected = '<top><pre></pre><next></next></top>'
+      same(clean(document.querySelector('test-twelve render').innerHTML), expected)
+      document.body.innerHTML += '<test-finished></test-finished>'
+    }, 10)
+  })
+  await page.waitFor('test-finished')
+  await page.close()
+})
+
 test('teardown', async t => {
   await browser.close()
   t.end()

@@ -96,4 +96,15 @@ ${settings => settings.button}
 </test-eleven>
 `
 
+gza`
+${element => {
+  element.addSetting('arr', ['<pre></pre>'])
+}}
+<test-twelve>
+  <top>
+  ${settings => settings.arr}
+  </top>
+</test-twelve>
+`
+
 window.clean = str => str.replace(/\n/g, '').replace(/ /g, '')
