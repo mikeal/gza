@@ -7,13 +7,12 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "browserify-istanbul": "^3.0.1",
     "raekwon": "^1.1.0",
-    "rza": "^2.4.1"
+    "rza": "^2.5.0"
   },
   "scripts": {
     "commit": "git-cz",
-    "test": "nyc --check-coverage --reports=html --lines 100 --branches 100 --functions 100 --exclude=tests/test-browser.js tap tests/test-*.js",
+    "test": "tap tests/test-*.js --100",
     "posttest": "standard",
     "precommit": "npm test",
     "prepush": "npm test",
@@ -27,16 +26,13 @@
     }
   },
   "devDependencies": {
-    "bl": "^1.2.1",
     "browserify": "^14.4.0",
     "budo": "^10.0.4",
+    "cappadonna": "^1.0.0",
     "codecov": "^2.3.1",
     "cz-conventional-changelog": "^2.0.0",
     "distjs": "^1.1.0",
     "husky": "^0.14.3",
-    "mkdirp": "^0.5.1",
-    "nyc": "^11.2.1",
-    "puppeteer": "^0.12.0",
     "semantic-release": "^8.0.3",
     "standard": "^10.0.3",
     "tap": "^10.7.2",

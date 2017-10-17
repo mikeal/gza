@@ -40,10 +40,11 @@ const gza = (strings, ...keys) => {
         settings = Object.assign({}, this._settings)
       }
       let _render = this.renderElement
-      await render(_render, parsed.template, settings, innerHTML)
       if (parsed.shadow.filter(s => typeof s === 'function').length) {
         await render(this.shadowRoot, parsed.shadow, settings, innerHTML)
       }
+      await render(_render, parsed.template, settings, innerHTML)
+
       return _render
     }
 
