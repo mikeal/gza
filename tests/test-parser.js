@@ -58,7 +58,7 @@ test('template functions', t => {
   t.plan(5)
   let ret = gza`
   <test-four ${{test: 2}}>
-    ${() => {}}
+    ${/* istanbul ignore next */() => {}}
     <div>${settings => settings.test}</div>
   </test-four>
   `
@@ -72,10 +72,10 @@ test('template functions', t => {
 test('constructors', t => {
   t.plan(5)
   let ret = gza`
-  ${() => {}}
-  ${() => {}}
+  ${/* istanbul ignore next */() => {}}
+  ${/* istanbul ignore next */() => {}}
   <test-five ${{test: 2}}>
-    ${() => {}}
+    ${/* istanbul ignore next */() => {}}
     <div>${settings => settings.test}</div>
   </test-five>
   `
@@ -89,10 +89,10 @@ test('constructors', t => {
 test('kitchen sink', t => {
   t.plan(5)
   let ret = gza`
-  ${() => {}}
-  ${() => {}}
+  ${/* istanbul ignore next */() => {}}
+  ${/* istanbul ignore next */() => {}}
   <test-kitchen ${{test: 2}}>
-    ${() => {}}
+    ${/* istanbul ignore next */() => {}}
     <div>${settings => settings.test}</div>
   </test-kitchen><div>${settings => settings.test}</div>`
 
@@ -101,4 +101,14 @@ test('kitchen sink', t => {
   t.same(ret.defaults, {test: 2})
   t.same(getTemplate(ret), '\n    \n    <div>2</div>\n  ')
   t.same(getShadow(ret), '<div>2</div>')
+})
+
+test('errors', t => {
+  t.plan(2)
+  try {
+    gza`<my-element>`
+  } catch (e) {
+    t.type(e, 'Error')
+    t.same(e.message, 'Cannot find close position for tagName: my-element')
+  }
 })

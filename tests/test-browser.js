@@ -8,12 +8,10 @@ const browserify = require('browserify')
 const istanbul = require('browserify-istanbul')
 
 const fs = require('fs')
-const mkdirp = require('mkdirp')
 const COVERAGE_FOLDER = './.nyc_output'
 
 function outputCoverage (page) {
   return new Promise(async (resolve, reject) => {
-    mkdirp.sync(COVERAGE_FOLDER)
     const dumpCoverage = (payload) => {
       const cov = JSON.parse(payload)
       fs.writeFileSync(

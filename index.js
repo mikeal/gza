@@ -7,8 +7,12 @@ const render = async (el, arr, settings, innerHTML) => {
   let tmp = arr.map(t => {
     if (typeof t === 'string') return t
     else if (typeof t === 'function') return t(settings, innerHTML)
-    else if (t instanceof HTMLElement) return t
-    else throw new Error(`Unknown type in template: ${t}`)
+    /* For some reason istanbul can't just ignore the else statement here. */
+    else /* istanbul ignore next */ if (t instanceof HTMLElement) {
+      return t
+    /* Can't test this effectively since renders aren't sync */
+    /* istanbul ignore next */
+    } else throw new Error(`Unknown type in template: ${t}`)
   })
   let results = await Promise.all(tmp)
   raekwon(el, results)
@@ -72,6 +76,8 @@ const gza = (strings, ...keys) => {
 module.exports = gza
 
 /* Expose global in standalone bundle. */
+/* istanbul ignore if */
 if (process.distjs) {
+  /* istanbul ignore next */
   window.gza = gza
 }

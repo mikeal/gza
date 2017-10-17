@@ -79,7 +79,7 @@ gza`
 gza`
 <test-ten>
 ${settings => settings.waitFor('sub')}
-<t-1></t-1>
+${document.createElement('t-1')}
 </test-ten>
 `
 
