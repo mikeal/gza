@@ -1,6 +1,6 @@
 /* globals clean */
 const path = require('path')
-const cappadonna = require('../../cappadonna')
+const cappadonna = require('cappadonna')
 const test = cappadonna(path.join(__dirname, 'components.js'))
 
 test('basic', async (page, t) => {
