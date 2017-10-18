@@ -69,15 +69,17 @@ test('promises init/template/shadow', async (page, t) => {
     let expected = `<style>test{font-size:3px;}</style>`
     t.same(clean(document.querySelector('test-eight').shadowRoot.innerHTML), expected)
     expected = '3'
-    t.same(clean(document.querySelector('test-eight render').innerHTML), expected)
-    document.querySelector('test-eight').test += 1
-    setTimeout(async () => {
-      expected = `<style>test{font-size:4px;}</style>`
-      t.same(clean(document.querySelector('test-eight').shadowRoot.innerHTML), expected)
-      expected = '4'
+    setTimeout(() => {
       t.same(clean(document.querySelector('test-eight render').innerHTML), expected)
-      document.body.innerHTML += '<test-finished></test-finished>'
-    }, 100)
+      document.querySelector('test-eight').test += 1
+      setTimeout(async () => {
+        expected = `<style>test{font-size:4px;}</style>`
+        t.same(clean(document.querySelector('test-eight').shadowRoot.innerHTML), expected)
+        expected = '4'
+        t.same(clean(document.querySelector('test-eight render').innerHTML), expected)
+        document.body.innerHTML += '<test-finished></test-finished>'
+      }, 100)
+    }, 0)
   })
   await page.waitFor('test-finished')
 })
