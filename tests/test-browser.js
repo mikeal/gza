@@ -146,13 +146,15 @@ test('dynamic arrays from settings', async (page, t) => {
   t.plan(2)
   await page.appendAndWait(`<test-twelve></test-twelve>`, 'test-twelve render')
   await page.evaluate(async () => {
-    let expected = '<top><pre></pre></top>'
-    t.same(clean(document.querySelector('test-twelve render').innerHTML), expected)
-    document.querySelector('test-twelve').arr.push('<next></next>')
-    setTimeout(async () => {
-      expected = '<top><pre></pre><next></next></top>'
+    setTimeout(() => {
+      let expected = '<top><pre></pre></top>'
       t.same(clean(document.querySelector('test-twelve render').innerHTML), expected)
-      document.body.innerHTML += '<test-finished></test-finished>'
+      document.querySelector('test-twelve').arr.push('<next></next>')
+      setTimeout(async () => {
+        expected = '<top><pre></pre><next></next></top>'
+        t.same(clean(document.querySelector('test-twelve render').innerHTML), expected)
+        document.body.innerHTML += '<test-finished></test-finished>'
+      }, 100)
     }, 100)
   })
   await page.waitFor('test-finished')
