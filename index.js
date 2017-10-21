@@ -15,7 +15,7 @@ const render = async (el, arr, settings, innerHTML) => {
     } else throw new Error(`Unknown type in template: ${t}`)
   })
   let results = await Promise.all(tmp)
-  raekwon(el, results)
+  return raekwon(el, results)
 }
 
 const nowhitespace = str => {

@@ -7,8 +7,8 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com)",
   "license": "Apache-2.0",
   "dependencies": {
-    "raekwon": "^1.1.1",
-    "rza": "^2.5.1"
+    "raekwon": "^2.0.0",
+    "rza": "^2.6.0"
   },
   "scripts": {
     "commit": "git-cz",
