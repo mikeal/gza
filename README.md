@@ -40,7 +40,7 @@ gza`
 ```
 
 See also [markdown-element](https://github.com/mikeal/markdown-element)
-which is implemented with `rza`
+which is implemented with `gza`
 
 # Features
 
@@ -55,7 +55,7 @@ functions, will the render function be called.
 Initialization functions are only ever called once per element instance.
 
 ```javascript
-rza`
+gza`
 ${async element => {
   let resp = await fetch('flowers.jpg')
   let blob = await resp.blob()
@@ -83,7 +83,7 @@ Every time the contents of the element changes it will also call the template
 functions in order to re-render.
 
 ```javascript
-rza`
+gza`
 <my-element ${one: 1, two: 2, three: 3}>
   <h1>${settings => settings.one}</h1>
   <h2>${settings => settings.two}</h2>
@@ -132,7 +132,7 @@ content and styling when properties and values change.
 ```javascript
 const nowhitespace = str => str.replace(/ /g, '')
 
-rza`
+gza`
 <my-element>
   ${(settings, innerHTML) => nowhitespace(innerHTML)}
 </my-element>
