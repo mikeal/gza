@@ -29,7 +29,9 @@ const gza = (strings, ...keys) => {
     async render (settings, innerHTML) {
       if (!this._constructed) {
         this._constructed = true
-        await Promise.all(parsed.constructors.map(c => c(this)))
+        for (const c of parsed.constructors) {
+          await c(this)
+        }
         /* We have don't want constructors to trigger another render.
            Instead, we can just reset the re-render and settings state.
          */
